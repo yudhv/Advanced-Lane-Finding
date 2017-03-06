@@ -14,13 +14,16 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/undistort_output.png "Undistorted"
-[image2]: ./test_images/test1.jpg "Road Transformed"
-[image3]: ./examples/binary_combo_example.jpg "Binary Example"
-[image4]: ./examples/warped_straight_lines.jpg "Warp Example"
-[image5]: ./examples/color_fit_lines.jpg "Fit Visual"
-[image6]: ./examples/example_output.jpg "Output"
-[video1]: ./project_video.mp4 "Video"
+[image1]: ./output_images/calib.png "calib"
+[image2]: ./output_images/cng.jpg "cng"
+[image3]: ./output_images/trap.jpg "trap"
+[image4]: ./output_images/warp.jpg "warp"
+[image5]: ./output_images/hist.jpg "hist"
+[image6]: ./output_images/wind.jpg "wind"
+[image7]: ./output_images/smooth.jpg "smooth"
+[image8]: ./output_images/test.jpg "test"
+[image9]: ./output_images/final.jpg "final"
+[video1]: ./output_video.mp4 "Video"
 
 ## Detailed Summary
 ####Here I will describe how I addressed each of the above-mentioned points in my implementation.  
@@ -137,6 +140,7 @@ To use the previous frame's computations, I created a ```Line``` class that stor
 Finally, the last 'n' values stored in the Line class are averaged out to give a smoother, less wobbly lane area plotting. I found 3-5 to be the ideal range for n. Anything above that made the plotting lag behind the actual curve on the road, and anything smaller would make the plotting more wobbly. 
 
 Here's a [link to my final video result](./output_video.mp4)
+![alt text][video1]
 
 ---
 
