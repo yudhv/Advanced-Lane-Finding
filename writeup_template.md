@@ -28,7 +28,6 @@ The goals / steps of this project are the following:
 ## Detailed Summary
 ####Here I will describe how I addressed each of the above-mentioned points in my implementation.  
 
----
 ###Camera Calibration and Distortion Correction
 
 ####1. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.
@@ -141,7 +140,6 @@ To use the previous frame's computations, I created a ```Line``` class that stor
 Finally, the last 'n' values stored in the Line class are averaged out to give a smoother, less wobbly lane area plotting. I found 3-5 to be the ideal range for n. Anything above that made the plotting lag behind the actual curve on the road, and anything smaller would make the plotting more wobbly. 
 
 Here's a [link to my final video result](./output_video.mp4)
-![alt text][video1]
 
 ---
 
