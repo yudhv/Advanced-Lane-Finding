@@ -14,7 +14,7 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./output_images/calib.png "calib"
+[image1]: ./output_images/calib.jpg "calib"
 [image2]: ./output_images/cng.jpg "cng"
 [image3]: ./output_images/trap.jpg "trap"
 [image4]: ./output_images/warp.jpg "warp"
@@ -44,13 +44,14 @@ I then used the output `objpoints` and `imgpoints` to compute the camera calibra
 ###Color and Gradient
 
 To demonstrate this step, I will describe how I apply the distortion correction to one of the test images like this one:
-![alt text][image2]
+
+![alt text][image8]
 
 I computed the Sobel derivative of the test image in the X direction. A Sobel operator computes the gradient of the "image intensity," thus emphasizing the edges of an image. This was particularly helpful as it emphasized on the lane lines more than other features in the test images. To compound this, I also converted the image to HLS (Hue, Lightness, Saturation) color mode. I found that the lane features were most augmented in the Saturation channel, and hence, I added a thresholded Saturation channel to the Sobel image created earlier and finally produced the resultant binary image as output. This code can be found in the `color_n_gradient()` function in the fourth cell.
 
 The resultant image looks like this:
 
-![alt text][image3]
+![alt text][image2]
 
 ###Perspective Transformation
 
@@ -71,7 +72,7 @@ Here is an example of the source and destination points generated from the above
 
 I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto the test image:
 
-![alt text][image4]
+![alt text][image3]
 
 And here is what the resultant warped image looks like:
 
@@ -83,19 +84,19 @@ In-order to fit a polynomial to the lanes, I first had to identify the lines on 
 
 Here is the histogram image:
 
-
+![alt text][image5]
 
 Next, a hypothetical window is created and moved in the upward direction along the previously detected X column. During its upward journey, I find the x values for columns with the most non-zero points inside the window. I reiterate this method for the other lane as well. This process allows for the window's height level accuracy of detecting the lane lines. 
 
 Here is what the windowed image looks like, in order to better understand the process:
 
-![alt text][image5]
+![alt text][image6]
 
 Finally, a polynomial is fit to the above-mentioned x-points for the lane lines. The function `np.polyfit()` is used for this. It returns the values of the parameters 'A', 'B', and 'C' for the second order polynomial equation -
 ####Ax^2 + Bx + C
 A smoother line generated using the polynomial looks like this:
 
-![alt text][image5]
+![alt text][image7]
 
 ###Radius of Curvature
 
@@ -116,7 +117,7 @@ I implemented this step in the 13th cell under the function `show_finished()`. T
 
 Here is an example of my result on a test image:
 
-![alt text][image6]
+![alt text][image9]
 
 ---
 
