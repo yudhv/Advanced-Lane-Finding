@@ -1,4 +1,4 @@
-#Advanced Lane Finding Project
+# Advanced Lane Finding Project
 
 ## Brief Summary
 The goals / steps of this project are the following:
@@ -26,11 +26,11 @@ The goals / steps of this project are the following:
 [video1]: ./output_video.mp4 "Video"
 
 ## Detailed Summary
-####Here I will describe how I addressed each of the above-mentioned points in my implementation.  
+#### Here I will describe how I addressed each of the above-mentioned points in my implementation.  
 
-###Camera Calibration and Distortion Correction
+### Camera Calibration and Distortion Correction
 
-####1. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.
+#### 1. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.
 
 The code for this step is contained in the third code cell of the IPython notebook "main.ipynb."
 
@@ -40,7 +40,7 @@ I then used the output `objpoints` and `imgpoints` to compute the camera calibra
 
 ![alt text][image1]
 
-###Color and Gradient
+### Color and Gradient
 
 To demonstrate this step, I will describe how I apply the distortion correction to one of the test images like this one:
 
@@ -52,7 +52,7 @@ The resultant image looks like this:
 
 ![alt text][image2]
 
-###Perspective Transformation
+### Perspective Transformation
 
 The fifth and sixth cells in the IPython notebook are tasked with creating a Perspective transform of the image to make the lanes appear as if we are standing right "above" them. Theoretically, this transformation should produce parallel lines, as is true for the lanes on a road. 
 
@@ -77,7 +77,7 @@ And here is what the resultant warped image looks like:
 
 ![alt text][image4]
 
-###Polynomial fitting
+### Polynomial fitting
 
 In-order to fit a polynomial to the lanes, I first had to identify the lines on a pixel-by-pixel basis. For this, I first found the base points of the lane lines by looking at the histogram summations of X columns in the image. The column with the highest sum was bound to be closest to the lane lines (as lanes are parallel and biased towards the y-direction). This code can be found in the 7th cell in the `line_detect()` function. 
 
@@ -92,12 +92,12 @@ Here is what the windowed image looks like, in order to better understand the pr
 ![alt text][image6]
 
 Finally, a polynomial is fit to the above-mentioned x-points for the lane lines. The function `np.polyfit()` is used for this. It returns the values of the parameters 'A', 'B', and 'C' for the second order polynomial equation -
-####Ax^2 + Bx + C
+#### Ax^2 + Bx + C
 A smoother line generated using the polynomial looks like this:
 
 ![alt text][image7]
 
-###Radius of Curvature
+### Radius of Curvature
 
 According to the [US traffic manual](http://onlinemanuals.txdot.gov/txdotmanuals/rdw/horizontal_alignment.htm#BGBHGEGC), the normal road is 3.7m wide and a single line is 30m long. Using these assumptions, I measured a meter-to-pixel ratio in the x and y directions:
 ```
@@ -110,7 +110,7 @@ In addition to the radius of curvature, the distance of the car from the center 
 
 The logic for distance from the center of the lane can be found in cell 10.
 
-###Visualize output
+### Visualize output
 
 I implemented this step in the 13th cell under the function `show_finished()`. This function takes as arguments the original image, the left lane polynomial, the right lane polynomial, the binary warped image, and the inverse matrix for the previously performed perspective transform. The inverse matrix was the 'Minv' array that was outputted by the `get_warped()` function. This matrix allows the warped plotting of the lanes to be converted back to the original image, thus giving us the final output.
 
@@ -120,7 +120,7 @@ Here is an example of my result on a test image:
 
 ---
 
-##Pipeline (video)
+## Pipeline (video)
 
 In-order to make this code work for videos, a few incremental changes were needed:
 
@@ -128,24 +128,24 @@ In-order to make this code work for videos, a few incremental changes were neede
 * Using a sanity check mechanism to avoid plotting any lines that weren't parallel, had vastly different curvatures, or had vastly different slopes. 
 * Using previous 5 polynomail fit instances to smooth out the plotting in the video, and make it look more elegant.
 
-###Iterative Lane Finding
+### Iterative Lane Finding
 Here, the previously found polynomial fits are used along with a margin window of 100 pixels. This allowed me to avoid going through the entire process of finding the lane lines from the start for each new frame. Generally, road lanes tend to remain non-abrupt, more so when each frame represents 1/30th of a second. Hence, a margin of 100 pixels allowed me to note any partial changes in the lane curvatures across each frame. This process helped in heavily reducing the burden on the host machine. This logic has been implemented in the `lane_detect_after()` function in cell number 8. 
 
-###Sanity Check
+### Sanity Check
 Due to the nominal changes that occur in each frame, we can easily use the previous frame's computation to guide lane line plotting. Here, three simple checks are made; first, checking if the lines are within a certain slope range (done right at the source in the `process_image()` function), second, checking if the left and right lanes have similary radius of curvatures, and third, checking if the lanes are at least 700 pixels (3.7 meters) wide apart. The second and the third checks can be found in the `sanity_check()` function in cell number 11. Whenever, a check fails, a red colored 'RESET' text is displayed on the frame, and the global 'attempted' boolean is turened to 'False.' This kicks in the original lane finding function `line_detect()`, thus making the pipeline more robust to false positives. 
 
 To use the previous frame's computations, I created a ```Line``` class that stored the last 'n' number of polynomial fits, or lane lines for both the right and the left lane. This code can be found in the 2nd cell of the IPython notebook.
 
-###Smoothening
+### Smoothening
 Finally, the last 'n' values stored in the Line class are averaged out to give a smoother, less wobbly lane area plotting. I found 3-5 to be the ideal range for n. Anything above that made the plotting lag behind the actual curve on the road, and anything smaller would make the plotting more wobbly. 
 
 Here's a [link to my final video result](./output_video.mp4)
 
 ---
 
-###Discussion
+### Discussion
 
-####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
+#### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
 Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
 
